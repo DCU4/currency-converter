@@ -8,15 +8,21 @@ class Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          // convert: Math.floor((32-32)*(5/9))
+          dollar: '',
+          euro: ''
         }
     }
 
     getExchangeRates = async e => {
       const call = await fetch(`http://data.fixer.io/api/latest?access_key=${API_KEY}`);
       const data = await call.json();
-      console.log(data);
-
+      // console.log(data);
+      if(data){
+      this.setState({
+        dollar: data.rates.USD,
+        euro: data.rates.EUR
+      });
+}
     }
 
     componentDidMount () {
@@ -24,11 +30,18 @@ class Container extends Component {
     }
 
     render() {
+      // console.log(this.state)
+      if(!this.state.euro || !this.state.dollar) {
+        return null;
+      }
+      let dollar = this.state.dollar;
+      let euro = this.state.euro;
         return (
           <main>
             <h1>Convert Away</h1>
             <Converter
-
+              dollar={dollar}
+              euro={euro}
             />
 
           </main>

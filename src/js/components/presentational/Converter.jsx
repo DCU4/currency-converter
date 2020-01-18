@@ -35,11 +35,12 @@ render() {
   const dollarToEuro = Math.round(this.state.dollarToEuro*100) / 100;
   const swapConverter = this.state.swapConverter;
   
+  
   if(!this.props.euro || !this.props.dollar) {
     return null;
   }
-  // console.log(this.props)
-  
+  const selectRates = <select> {this.props.rates.map((r,i) => <option key={i} value={r}>{r}</option>)}</select>
+
     return (
       !swapConverter ? (
       <div className="converter">
@@ -47,6 +48,9 @@ render() {
         <p className="converted"><span>$</span>{euroToDollar.toFixed(2)}</p>
         <button onClick={this.convert}>Have at it </button>
         <p onClick={this.swapConversions}>€>$</p>
+        {selectRates}
+
+       
       </div>
       ) : (
         <div className="converter">
